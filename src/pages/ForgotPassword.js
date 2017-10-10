@@ -74,7 +74,11 @@ class ForgotPassword extends Component {
                         <br />
                         <label><b>Password</b></label>
                         <br />
-                        <input type="password" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
+                        <input type="password" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} onKeyDown={(e) => {
+                            if (e.keyCode !== 13)
+                                return;
+                            this.handleSave()
+                        }} />
                         <br />
                         {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
 
