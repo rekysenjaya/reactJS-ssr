@@ -78,7 +78,7 @@ class Register extends Component {
                         <br />
                         <label><b>Password</b></label>
                         <br />
-                        <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
+                        <input type="password" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
                         <br />
                         <label><b>Firstname</b></label>
                         <br />
