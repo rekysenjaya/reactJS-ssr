@@ -1,0 +1,66 @@
+{
+  "name": "application-twitter",
+  "version": "0.0.1",
+  "description": "Application Twitter",
+  "scripts": {
+    "start": "node bin/server.js",
+    "lint": "eslint src",
+    "build": "NODE_ENVIRONMENT=production webpack -p"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://rekysenjaya.github.io"
+  },
+  "keywords": [
+    "react",
+    "reactjs"
+  ],
+  "author": "Reky <rekysenjaya@gmail.com> (http://github.com/rekysenjaya)",
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-core": "^6.25.0",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "body-parser": "^1.17.2",
+    "css-loader": "^0.28.7",
+    "eslint-plugin-react": "^7.1.0",
+    "extract-text-webpack-plugin": "^3.0.1",
+    "file-loader": "^0.11.2",
+    "jquery": "^3.2.1",
+    "node-sass": "^4.5.3",
+    "react-hot-loader": "^2.0.0-alpha-4",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.18.2",
+    "ts-loader": "^2.2.1",
+    "typescript": "^2.4.1",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^1.11.0",
+    "webpack-dev-server": "^2.5.0"
+  },
+  "dependencies": {
+    "apeman-react-clock": "^3.0.3",
+    "classnames": "^2.2.5",
+    "cookie-parser": "^1.4.3",
+    "crypto": "^1.0.1",
+    "express": "^4.15.3",
+    "form-data": "^2.3.1",
+    "jsesc": "^2.5.1",
+    "mongoose": "^4.12.1",
+    "morgan": "^1.9.0",
+    "prop-types": "^15.5.10",
+    "react": "^15.6.1",
+    "react-datepicker": "^0.55.0",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
+    "simple-encryptor": "^1.1.1",
+    "superagent": "^3.6.3",
+    "webpack-hot-middleware": "^2.18.0"
+  }
+}
