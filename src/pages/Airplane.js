@@ -18,16 +18,12 @@ class Airplane extends Component {
         }
     }
 
-    componentDidMount() {
-        this.props.actions.todoAirplane.airplane()
-    }
-
     validateTime(strTime) {
         var regex = new RegExp("^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$");
         if (regex.test(strTime)) {
-            console.log("true");
+            return true;
         } else {
-            console.log("false");
+            return false;
         }
     }
 
@@ -53,13 +49,14 @@ class Airplane extends Component {
         this.props.actions.todoAirplane.deleteAirplane(id);
     }
 
-    handleSave() {
+    handleSave(e) {
+        e.preventDefault();
         const { id, name, flight_time, seat, from_city, destination_city } = this.state.editData;
 
         if (!name || !flight_time || !seat || !from_city || !destination_city)
             return this.message('Please enter all value')
 
-        if (this.validateTime(flight_time))
+        if (!this.validateTime(flight_time))
             return this.message('Please format Flight Time "HH:mm"')
 
         if (!id)

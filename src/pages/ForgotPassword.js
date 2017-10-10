@@ -22,7 +22,7 @@ class ForgotPassword extends Component {
 
     validation() {
         let { email, password } = this.state.editData;
-        
+
         let lastAtPos = email.lastIndexOf('@');
         let lastDotPos = email.lastIndexOf('.');
         if (typeof email !== "undefined" && !(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf('@@') == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2)) {
@@ -41,7 +41,7 @@ class ForgotPassword extends Component {
         if (!this.validation()) {
 
             this.props.actions.todoUsers.forgotPasswordUsers({ email, password });
-            
+
             this.setState({
                 editData: {}
             })
@@ -62,17 +62,27 @@ class ForgotPassword extends Component {
 
         return (
             <div id="wrapper">
-                <label><b>Name</b></label>
-                <br />
-                <input type="text" placeholder="Enter Email" name="email" value={editData.email || ''} onChange={this.handleChange.bind(this)} />
-                <br />
-                <label><b>Password</b></label>
-                <br />
-                <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
-                <br />
-                {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
+                <h1 className="center">Travel<b>KU</b></h1>
+                <hr />
+                <div className="modal-content animate"  >
+                    <h3 className="center">Forgot <b>Password</b></h3>
+                    <hr />
+                    <div className="container">
+                        <label><b>Name</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Email" name="email" value={editData.email || ''} onChange={this.handleChange.bind(this)} />
+                        <br />
+                        <label><b>Password</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
+                        <br />
+                        {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
 
-                <button id="myBtn" onClick={this.handleSave.bind(this)} >Send</button>
+                        <div className="clearfix">
+                            <button type="submit" onClick={this.handleSave.bind(this)} className="button">Send</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

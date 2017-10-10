@@ -23,6 +23,8 @@ const renderFullPage = html => {
 	<!doctype html>
 	<html lang="utf-8">
 		<head>
+			<title>TravelKu</title>
+			<link rel="icon" href="/public/image/travel.jpg" type="image/gif" sizes="16x16">
 		</head>
 		<body>
 			<section id="appBody" class="appBody">${html}</section>

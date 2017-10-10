@@ -36,7 +36,7 @@ router.get('/', function (req, res, next) {
   Users.find(function (err, user) {
     if (err) return next(err);
     res.json(user);
-  }).sort('id');
+  }).sort('id').select('-password');
 });
 
 /* GET Limit skip */
@@ -44,7 +44,7 @@ router.get('/:skip/:limit', function (req, res, next) {
   Users.find(function (err, user) {
     if (err) return next(err);
     res.json(user);
-  }).sort('id').skip(parseInt(req.params.skip)).limit(parseInt(req.params.limit));
+  }).sort('id').skip(parseInt(req.params.skip)).limit(parseInt(req.params.limit)).select('-password');
 });
 
 /* GET users BY ID */
@@ -52,19 +52,21 @@ router.get('/:id', function (req, res, next) {
   Users.findOne({ id: req.params.id }, function (err, post) {
     if (err) return next(err);
     res.json({ ...post, status: true });
-  });
+  }).select('-password');
 });
 
 /* Register users */
 router.post('/', function (req, res, next) {
-  Users.findOne({ email: req.body.email }, function (err, post) {
+  Users.count({ email: req.body.email }, function (err, post) {
     if (err) return next(err);
-    if (post.email != req.body.email) {
+
+    if (!post) {
       let user = new Users(req.body)
       user.save(function (err, data) {
         if (err) return next(err);
-        res.json({ ...data, status: true });
-      });
+
+        res.json({ 'token': req.encryptor.encrypt(data), data, status: true });
+      }).select('-password');
     } else {
       res.json({ status: false })
     }
@@ -77,10 +79,10 @@ router.post('/login', function (req, res, next) {
     if (err) return next(err);
 
     if (post) {
-      Users.findOne({ email: req.body.email }, function (err, doc) {
+      Users.findOne({ email: req.body.email }, function (err, data) {
         if (err) return next(err);
 
-        res.json({ 'token': req.encryptor.encrypt(doc), status: true });
+        res.json({ 'token': req.encryptor.encrypt(data), data, status: true });
       }).select('-password');
     } else {
       res.json({ status: false })
@@ -94,9 +96,9 @@ router.put('/forgot_password', function (req, res, next) {
     if (err) return next(err);
 
     if (post) {
-      Users.findOneAndUpdate({ email: req.body.email }, req.body, { upsert: true }, function (err, doc) {
+      Users.findOneAndUpdate({ email: req.body.email }, req.body, { upsert: true }, function (err, data) {
         if (err) return next(err);
-        res.json({ ...doc, status: true });
+        res.json({ ...data, status: true });
       });
     } else {
       res.json({ status: false })
@@ -106,9 +108,18 @@ router.put('/forgot_password', function (req, res, next) {
 
 /* UPDATE users */
 router.put('/:id', function (req, res, next) {
-  Users.findOneAndUpdate({ id: req.params.id }, req.body, { upsert: true }, function (err, doc) {
+  Users.count({ email: req.body.email }, function (err, post) {
     if (err) return next(err);
-    res.json(doc);
+
+    if (post) {
+      Users.findOneAndUpdate({ id: req.params.id }, req.body, { upsert: true }, function (err, data) {
+        if (err) return next(err);
+
+        res.json({ status: true });
+      });
+    } else {
+      res.json({ status: false })
+    }
   });
 });
 
@@ -117,7 +128,7 @@ router.delete('/:id', function (req, res, next) {
   Users.findOneAndRemove({ email: req.params.id }, function (err, post) {
     if (err) return next(err);
     res.json(post);
-  });
+  }).select('-password');
 });
 
 module.exports = router;

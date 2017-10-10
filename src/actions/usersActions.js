@@ -84,10 +84,16 @@ export function addUsers(data) {
         } else {
           setTimeout(function () {
             dispatch(Message(''))
+            window.location.href = `/`;
           }, 3000);
           if (!res.body.status) {
             return dispatch(Message('Email already exists!'))
           }
+          delete res.body.data.password;
+
+          localStorage.setItem('travel', JSON.stringify({ token: res.body.token, user: res.body.data, cekPage: true }));
+
+
           dispatch(Message('Successful registration'))
         }
       })
@@ -128,6 +134,38 @@ export function editUsersSuccess(users) {
   return { type: types.EDIT_USER_SUCCESS, users }
 }
 
+export function updateUsers(data) {
+
+  return dispatch => {
+    return request
+      .put(`/user/${data.id}`)
+      .set('Content-Type', 'application/json')
+      .set('token', token)
+      .send(data)
+      .end((err, res) => {
+        if (err) {
+          setTimeout(function () {
+            dispatch(Message(''))
+          }, 3000);
+          dispatch(Message('Please check your connection!'))
+        } else {
+          setTimeout(function () {
+            dispatch(Message(''))
+            window.location.href = `/`;
+          }, 3000);
+          if (!res.body.status) {
+            return dispatch(Message('Email not exists!'))
+          }
+          delete data.password
+
+          localStorage.setItem('travel', JSON.stringify({ token, user: data, cekPage: true }));
+
+          dispatch(Message('Update successfully'))
+        }
+      })
+  }
+}
+
 export function loginUsers(data) {
 
   return dispatch => {
@@ -150,7 +188,7 @@ export function loginUsers(data) {
             return dispatch(Message('Email And Password not exists!'))
           }
 
-          localStorage.setItem('travel', JSON.stringify({ token: res.body.token, cekPage: true }));
+          localStorage.setItem('travel', JSON.stringify({ token: res.body.token, user: res.body.data, cekPage: true }));
 
           window.location.href = `/`;
           dispatch(Message('Successfully'))
@@ -176,6 +214,7 @@ export function forgotPasswordUsers(data) {
         } else {
           setTimeout(function () {
             dispatch(Message(''))
+            window.location.href = `/`;
           }, 3000);
           if (!res.body.status) {
             return dispatch(Message('Email not exists!'))

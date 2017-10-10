@@ -20,6 +20,7 @@ export default function airplane(state = initialState, action) {
 
         case types.ADD_AIRPLANE_DATA:
             return [
+                ...state,
                 {
                     id: action.id,
                     name: action.name,
@@ -27,8 +28,7 @@ export default function airplane(state = initialState, action) {
                     seat: action.seat,
                     from_city: action.from_city,
                     destination_city: action.destination_city
-                },
-                ...state
+                }
             ]
 
         case types.ADD_AIRPLANE_SUCCESS:

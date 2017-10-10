@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import { bindActionCreators } from 'redux';
 import * as todoUsers from '../actions/usersActions';
+import * as todoAirplane from '../actions/airplaneActions';
 import { connect } from 'react-redux';
 
 import Dashboard from '../pages/Dashboard';
@@ -13,6 +14,8 @@ import ForgotPassword from '../pages/ForgotPassword'
 import Register from '../pages/Register';
 import NotFound from '../pages/NotFound';
 
+import sass from '../../public/css/admin.scss';
+
 class Routes extends Component {
     constructor(props) {
         super(props);
@@ -22,6 +25,8 @@ class Routes extends Component {
         }
     }
     componentDidMount() {
+        this.props.actions.todoAirplane.airplane()
+
         let cekPage = localStorage.getItem('travel') && JSON.parse(localStorage.getItem('travel')).cekPage ? JSON.parse(localStorage.getItem('travel')).cekPage : null;
 
         if (cekPage)
@@ -35,8 +40,8 @@ class Routes extends Component {
             arr = ['', 'airplanes', 'profiles']
 
         const a = arr.filter(data => data == getUrl)
-        
-        if (a.length==0)
+
+        if (a.length == 0)
             window.location.href = `/`;
 
     }
@@ -79,7 +84,8 @@ class Routes extends Component {
 function mapStateToProps(state) {
     return {
         state: {
-            users: state.users
+            users: state.users,
+            airplane: state.airplane
         }
     };
 }
@@ -87,7 +93,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         actions: {
-            todoUsers: bindActionCreators(todoUsers, dispatch)
+            todoUsers: bindActionCreators(todoUsers, dispatch),
+            todoAirplane: bindActionCreators(todoAirplane, dispatch)
         }
     };
 }

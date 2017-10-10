@@ -29,7 +29,7 @@ class Menu extends Component {
         return (
             <ul className="sidenav">
                 <li><a className={getUrl == '' && `active`} href="/">Home</a></li>
-                <li><a className={getUrl == 'airplanes' && `active`} href="/airplanes">AirPlane</a></li>
+                <li><a className={getUrl == 'airplanes' && `active`} href="/airplanes">Airplane</a></li>
                 <li><a className={getUrl == 'profiles' && `active`} href="/profiles">Profile</a></li>
                 <li><a className="" href="/" onClick={() => {
 

@@ -38,6 +38,11 @@ class Login extends Component {
 
     handleSave() {
         let { email, password } = this.state.editData;
+        if (!password || !email) {
+            this.message('Please enter all value');
+            return true;
+        }
+
         if (!this.validation()) {
 
             this.props.actions.todoUsers.loginUsers({ email, password });
@@ -62,7 +67,11 @@ class Login extends Component {
 
         return (
             <div id="wrapper">
+                <h1 className="center">Travel<b>KU</b></h1>
+                <hr />
                 <div className="modal-content animate"  >
+                    <h3 className="center">Log <b>In</b></h3>
+                    <hr />
                     <div className="container">
                         <label><b>Name</b></label>
                         <br />
@@ -73,11 +82,13 @@ class Login extends Component {
                         <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
                         <br />
                         {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
-
+                        <hr />
+                        <span >Forgot <a href="/forgot_password">password?</a></span>
+                        <hr />
                         <div className="clearfix">
 
                             <button onClick={this.handleSave.bind(this)} className="button">Login</button>
-                            <button onClick={() => this.setState({ modal: 'none' })} className="button button3">Cancel</button>
+                            <a href="/register" className="button button2">Sign Up</a>
                         </div>
                     </div>
                 </div>

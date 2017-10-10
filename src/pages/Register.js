@@ -66,25 +66,37 @@ class Register extends Component {
 
         return (
             <div id="wrapper">
-                <label><b>Name</b></label>
-                <br />
-                <input type="text" placeholder="Enter Email" name="email" value={editData.email || ''} onChange={this.handleChange.bind(this)} />
-                <br />
-                <label><b>Password</b></label>
-                <br />
-                <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
-                <br />
-                <label><b>Firstname</b></label>
-                <br />
-                <input type="text" placeholder="Enter Firstname" value={editData.firstname || ''} name="firstname" onChange={this.handleChange.bind(this)} />
-                <br />
-                <label><b>Lastname</b></label>
-                <br />
-                <input type="text" placeholder="Enter Lastname" value={editData.lastname || ''} name="lastname" onChange={this.handleChange.bind(this)} />
-                <br />
-                {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
+                <h1 className="center">Travel<b>KU</b></h1>
+                <hr />
+                <div className="modal-content animate"  >
+                    <h3 className="center">Sign <b>Up</b></h3>
+                    <hr />
+                    <div className="container">
+                        <label><b>Name</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Email" name="email" value={editData.email || ''} onChange={this.handleChange.bind(this)} />
+                        <br />
+                        <label><b>Password</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Password" name="password" value={editData.password || ''} onChange={this.handleChange.bind(this)} />
+                        <br />
+                        <label><b>Firstname</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Firstname" value={editData.firstname || ''} name="firstname" onChange={this.handleChange.bind(this)} />
+                        <br />
+                        <label><b>Lastname</b></label>
+                        <br />
+                        <input type="text" placeholder="Enter Lastname" value={editData.lastname || ''} name="lastname" onChange={this.handleChange.bind(this)} />
+                        <br />
+                        {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
 
-                <button id="myBtn" onClick={this.handleSave.bind(this)} >Save</button>
+                        <div className="clearfix">
+
+                            <button onClick={this.handleSave.bind(this)} className="button button2">Sign Up</button>
+                            <a href="/" className="button">Login</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

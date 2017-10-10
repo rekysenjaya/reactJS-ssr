@@ -19,19 +19,42 @@ class Profile extends Component {
     }
 
     componentDidMount() {
-        // this.props.actions.todoAuth.cek()
+        let user = localStorage.getItem('travel') && JSON.parse(localStorage.getItem('travel')).user ? JSON.parse(localStorage.getItem('travel')).user : null;
+
+        this.setState({
+            editData: { ...this.state.editData, ...user }
+        })
+    }
+
+    message(val) {
+        setTimeout(function () {
+            this.props.actions.todoUsers.Message('')
+        }.bind(this), 3000);
+        this.props.actions.todoUsers.Message(val)
+    }
+
+    validation() {
+        let { email, password } = this.state.editData;
+
+        let lastAtPos = email.lastIndexOf('@');
+        let lastDotPos = email.lastIndexOf('.');
+        if (typeof email !== "undefined" && !(lastAtPos < lastDotPos && lastAtPos > 0 && email.indexOf('@@') == -1 && lastDotPos > 2 && (email.length - lastDotPos) > 2)) {
+            this.message('Email is not valid');
+            return true;
+        } else if (typeof password !== "undefined" && password.length <= 5) {
+            this.message('Password min length 6');
+            return true;
+        } else {
+            return false;
+        }
     }
 
     handleSave() {
-        const { id, name, flight_time, seat, from_city, destination_city } = this.state.editData;
+        let { editData } = this.state;
+        if (!this.validation()) {
 
-        if (!name || !flight_time || !seat || !from_city || !destination_city)
-            return this.message('Please enter all value')
-
-        this.setState({
-            editData: {},
-            modal: 'none'
-        })
+            this.props.actions.todoUsers.updateUsers(editData);
+        }
     }
 
     handleChange(val) {
@@ -62,17 +85,18 @@ class Profile extends Component {
     }
 
     render() {
-        const { editData } = this.state
+        const { editData } = this.state;
+        const { users } = this.props.state;
+        
         return (
             <div id="wrapper">
                 <Menu />
                 <div className="content">
                     <h1>Profile</h1>
                     <hr />
-                    <form className="modal-content animate"  >
+                    <div className="modal-content animate"  >
                         <div className="container">
                             {editData.image.length > 100 && <img className="img-cover" src={this.state.editData.image} />}
-
 
                             <br />
                             <input type="hidden" value={editData.id || ''} />
@@ -96,13 +120,15 @@ class Profile extends Component {
                             <br />
                             <input type="password" placeholder="Enter Password" value={editData.password || ''} name="password" onChange={this.handleChange.bind(this)} />
                             <br />
+                            {users.password.message && <div style={{ backgroundColor: '#f0ad4e', padding: '5px', boxShadow: '2px 6px 4px -4px black' }} >{users.password.message}</div>}
+
                             <div className="clearfix">
 
                                 <button type="submit" onClick={this.handleSave.bind(this)} className="button">Submit</button>
                                 <button onClick={() => this.setState({ modal: 'none' })} className="button button3">Cancel</button>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         )
